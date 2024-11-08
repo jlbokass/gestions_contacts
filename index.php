@@ -1,4 +1,5 @@
 <?php require_once 'data.php'; ?>
+<?php require_once 'functions.php'; ?>
 <?php
 // initialize variables
 $name = $email = $phone = '';
@@ -40,57 +41,13 @@ $name = $email = $phone = '';
             <div class="col-12 col-md-6">
                 <h2 class="mb-3">Contacts</h2>
                 <?php
-                // If server request method is POST
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    // Isset form data and not empty
-                    if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['phone'])) {
-                        // Get form data
-                        $name = $_POST['name'];
-                        $email = $_POST['email'];
-                        $phone = $_POST['phone'];
-
-                        // Display success message
-                        echo '<div class="alert alert-success">Contact added successfully</div>';
-
-                        // Show contact details in a var_dump
-                        // var_dump($name, $email, $phone);
-
-                        // Add contact to contacts array $contacts
-                        $contacts[] = [
-                            'name' => $name,
-                            'email' => $email,
-                            'phone' => $phone
-                        ];
-
-                        // Show contacts in a var_dump
-                        /*echo '<pre>';
-                        var_dump($contacts);
-                        echo '</pre>';*/
-
-                    } else {
-                        // Display error message
-                        echo '<div class="alert alert-danger">All fields are required</div>';
-                    }
-                }
+                // Add contact to contacts array
+                $contacts = addContact($contacts);
                 ?>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($contacts as $contact): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($contact['name']); ?></td>
-                            <td><?= htmlspecialchars($contact['email']); ?></td>
-                            <td><?= htmlspecialchars($contact['phone']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-            </div>
+                <?php
+                // Display contacts array
+                displayContacts($contacts);
+                ?>
         </div>
 
     </div>
